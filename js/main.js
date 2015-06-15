@@ -1,55 +1,66 @@
 // generate a "Raw Searcher" to handle search queries
 google.load('search', '1');
 
+var DEFAULT_IMG_URL = 'https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xap1/v/t1.0-1/p160x160/1390772_1411031915796231_174206743_n.jpg?oh=7a7fe381fd07ee3f2cf8d5141ecf6fb8&oe=55F91819&__gda__=1442557115_4c4c1b4730acf8c17ed99a2f8e51796d';
+
+function buildRelatedArticle(article) {
+    var html = "<div class='col-xs-4'>";
+    var content = "";
+    if (article !== undefined) {
+        var imageUrl = (('image' in article) ? article.image.url : DEFAULT_IMG_URL);
+        content = "\
+<div class='row'>\
+    <div class='col-xs-12 feed-related-img-div'>\
+        <img src='" + imageUrl + "' alt='' class='img-responsive center-block' />\
+    </div>\
+<div class='col-xs-12'>\
+    <a class='text-muted related-article-url' href='" + article.unescapedUrl + "'>" + article.title + "</a>\
+</div>\
+</div>";
+    }
+    html += (content + "</div>");
+    return html;
+}
+
 // add a news item into the feed
 function feedAdder(entry) {
     // build
-    var DEFAULT_IMG_URL = 'http://news.livedoor.com/img/fb/news.png?v=20131122';
-    var html = "\
-<div class='col-xs-12 panel panel-default'>\
-             <div class='col-xs-4 main-feed-img'>";
-    if (typeof entry.imgUrl !== 'undefined') {
-        html += "<img src='" + entry.imgUrl + "' alt='' class='img-responsive' />";
+    var mainArticle = "\
+    <div class='col-xs-12 main-article-container'>\
+    <div class='col-xs-4 feed-img-div'>";
+    if (entry.imgUrl !== undefined) {
+        mainArticle += "<img src='" + entry.imgUrl + "' alt='' class='img-responsive main-article-img'/>";
     } else {
-        html += "<img src='" + DEFAULT_IMG_URL + "' alt='' class='img-responsive' />";
+        mainArticle += "<img src='" + DEFAULT_IMG_URL + "' alt='' class='img-responsive' />";
     }
-    html += "\
-            </div>\
-            <div class='col-xs-8'>\
-                <strong>" + entry.title + "</strong>\
-                <p class='text-muted'>" + entry.contentSnippet + "</p>\
-            </div>\
+    mainArticle += "\
+    </div>\
+    <div class='col-xs-8'>\
+        <strong>" + entry.title + "</strong>\
+        <p class='text-muted'>" + entry.contentSnippet + "</p>\
+    </div>\
+    </div>";
+    var relatedArticles = "\
+    <div class='col-xs-12 related-article-container'>";
+    for (var i = 0; i < 3; i++) {
+        relatedArticles += buildRelatedArticle(entry.relatedArticles[i]);
+    }
+    relatedArticles += "\
 </div>";
 
     // append
     $('<div/>', {
         id: 'foo',
         href: 'http://google.com',
-        'class': 'col-xs-12 col-md-6',
-        /* html: '<h3>' + data.entries[i].title + '</h3>' */
-        html: html
+        'class': 'col-xs-12 col-md-6 panel panel-default',
+        html: mainArticle + relatedArticles
     }).appendTo('#main-feed');
 }
 
 function newsSearchComplete(newsSearch, entry) {
+    // console.log(newsSearch.results);
+    entry.relatedArticles = newsSearch.results;
     feedAdder(entry);
-
-    // Check that we got results
-    if (newsSearch.results && newsSearch.results.length > 0) {
-        for (var i = 0; i < newsSearch.results.length; i++) {
-            // console.log(newsSearch.results[i]);
-            // Create HTML elements for search results
-            var p = document.createElement('p');
-            var a = document.createElement('a');
-            a.href = newsSearch.results[i].unescapedUrl;
-            a.innerHTML = newsSearch.results[i].title;
-
-            // Append search results to the HTML nodes
-            p.appendChild(a);
-            // document.body.appendChild(p);
-            $('#main-feed').append(p);
-        }
-    }
 }
 
 function getRelated(entry) {
@@ -61,11 +72,12 @@ function getRelated(entry) {
     newsSearch.setSearchCompleteCallback(this, newsSearchComplete, [newsSearch, entry]);
 
     // Specify search quer(ies)
-    // console.log(entry.articleBody);
     var hitWords = getHitWords(entry.articleBody);
 
     // newsSearch.execute(entry.title);
-    newsSearch.execute(hitWords.join(' '));
+    var query = hitWords.join(' ');
+    console.log(entry.title + ": " + query);
+    newsSearch.execute(query);
 }
 
 // Retrieve the details of the news item, jquery.xdomainajax is necessary
@@ -77,7 +89,11 @@ function getDetails(entry) {
             // add the details to the entry
             entry.articleBody = $(res.responseText).find('div.articleBody:first').text();
             entry.imgUrl = $(res.responseText).find('figure.articleImage:first').find('img:first').prop('src');
-            getRelated(entry);
+            // console.log(entry);
+            // console.log($(res.responseText));
+            if (entry.articleBody.length > 0) {
+                getRelated(entry);
+            }
         }
     });
 }
@@ -87,7 +103,6 @@ function showFeed(feed) {
     for (var i in feed.entries) {
         getDetails(feed.entries[i]);
     }
-    // console.log(feed);
 }
 
 function showFeedFromUrl(url) {
