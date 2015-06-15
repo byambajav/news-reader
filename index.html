@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>RSS Reader</title>
+    <meta name="description" content="RSS Reader">
+    <meta name="author" content="Byambajav Namsraijav">
+    <!-- To ensure proper rendering and touch zooming, add the viewport meta tag to your <head>. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- <link rel="Shortcut Icon" href="{{ url_for('static', filename='favicon.png') }}" type="image/x-icon"> -->
+
+    <!-- CSS includes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+</head>
+<body style="padding-top: 20px; padding-bottom: 20px">
+    <div class='container'>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="index.html">RSS Reader</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#">Home</a></li>
+                        <li><a href='https://github.com/imwilsonxu/fbone'>About</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#">Settings</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <div class="container">
+        <div>
+            <ul class="nav nav-tabs">
+                <li class="active">
+                    <a href="#">Top</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Main feed -->
+        <h1 id="title"></h1>
+        <div id="main-feed" class="row">
+        </div>
+    </div>
+    <footer>
+    </footer>
+
+    <!-- JS includes -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <!-- script src="{{ url_for('static', filename='js/main.js') }}"></script> -->
+    <script>
+     var FEED_URL = "http://news.livedoor.com/topics/rss/top.xml";
+     function getImgUrl(url) {
+
+     }
+
+     function renderNews(data) {
+         $('#title').html(data.description);
+         for (i in data.entries) {
+             jQuery('<div/>', {
+                 id: 'foo',
+                 href: 'http://google.com',
+                 'class': 'col-xs-12 col-md-6',
+                 /* html: '<h3>' + data.entries[i].title + '</h3>' */
+                 html: "<div class='panel panel-default'>\
+    <div class='panel-body'>\
+        <div class='row'>\
+            <div class='col-xs-4 col-md-2'>\
+                <img src='http://placehold.it/150x150' alt='' class='img-responsive left-block' />\
+            </div>\
+        </div>\
+    </div>\
+</div>"
+             }).appendTo('#main-feed');
+         }
+         console.log(data);
+     }
+     function parseRSS(url, callback) {
+         $.ajax({
+             url: 'http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=10&callback=?&q=' + encodeURIComponent(url),
+             dataType: 'json',
+             success: function(data) {
+                 callback(data.responseData.feed);
+             }
+         });
+     }
+     console.log(encodeURIComponent(FEED_URL));
+     parseRSS(FEED_URL, renderNews);
+    </script>
+</body>
+</html>
