@@ -20,6 +20,7 @@
     margin-bottom: 8px;
     padding-left: 0px;
     padding-right: 0px;
+    overflow: hidden;
 }
 
 img.main-article-img {
