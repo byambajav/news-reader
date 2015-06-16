@@ -48,7 +48,8 @@ function feedAdder(entry) {
     </div>\
     <div class='col-xs-8'>\
         <strong>" + entry.title + "</strong>\
-        <p class='text-muted'>" + entry.contentSnippet + "</p>\
+        <p class='text-muted'>" + entry.contentSnippet +
+       "<small class='text-muted text-right'> /" + moment(Date.parse(entry.publishedDate)).fromNow() + "</small></p>\
     </div>\
     </div>";
 
@@ -66,13 +67,8 @@ function feedAdder(entry) {
     relatedArticles += "\
 </div>";
 
-    // append main article and related articles to the main feed
-    $('<div/>', {
-        id: 'foo',
-        href: 'http://google.com',
-        'class': 'col-xs-12 col-md-6',
-        html: mainArticle + relatedArticles
-    }).appendTo('#main-feed');
+    // insert main article and related articles to the holder
+    $('#article-' + entry.index).html(mainArticle + relatedArticles);
 
     // modal
     var modal = "\
@@ -148,6 +144,12 @@ function showFeed(feed) {
         console.log(feed.entries[i]);
         feed.entries[i].index = i;
         if (checkAddToCurrrentArticles(feed.entries[i].link)) {
+            // append main article and related articles holder to the main feed
+            $('<div/>', {
+                id: 'article-' + i,
+                'class': 'col-xs-12 col-md-6'
+            }).appendTo('#main-feed');
+
             getDetails(feed.entries[i]);
         }
     }
