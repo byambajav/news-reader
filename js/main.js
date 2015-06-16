@@ -113,11 +113,8 @@ function getRelated(entry) {
 
     // Specify search quer(ies)
     var hitWords = getHitWords(entry.articleBody);
-    // var hitWords = getHitWords(entry.title);
 
-    // newsSearch.execute(entry.title);
     var query = hitWords.join(' ');
-    console.log(entry.title + ": " + query);
     newsSearch.execute(query);
 }
 
@@ -141,7 +138,6 @@ function getDetails(entry) {
 function showFeed(feed) {
     $('#title').html(feed.description);
     for (var i in feed.entries) {
-        console.log(feed.entries[i]);
         feed.entries[i].index = i;
         if (checkAddToCurrrentArticles(feed.entries[i].link)) {
             // append main article and related articles holder to the main feed

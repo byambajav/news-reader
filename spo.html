@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>livedoor NEWS</title>
+    <meta name="description" content="livedoor NEWS">
+    <meta name="author" content="Byambajav Namsraijav">
+    <!-- To ensure proper rendering and touch zooming, add the viewport meta tag to your <head>. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Livedoor News favicon -->
+    <link rel="icon" href="http://parts.news.livedoor.com/img/favicon.ico?v=20131002" type="image/x-icon">
+    <link rel="Shortcut Icon" href="http://parts.news.livedoor.com/img/favicon.ico?v=20131002" type="image/x-icon">
+
+    <!-- CSS includes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body style="padding-top: 20px; padding-bottom: 20px">
+    <div class='container'>
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="/news-reader/">Home</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/news-reader/">主要</a></li>
+                        <li><a href='dom'>国内</a></li>
+                        <li><a href='int'>国際</a></li>
+                        <li><a href='eco'>IT 経済</a></li>
+                        <li><a href='ent'>芸能</a></li>
+                        <li class="active"><a href='spo'>スポーツ</a></li>
+                        <li><a href='52'>映画</a></li>
+                        <li><a href='gourmet'>グルメ</a></li>
+                        <li><a href='love'>女子</a></li>
+                        <li><a href='trend'>トレンド</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href='about'>About</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <div class="container">
+        <h2 id="title" class="feed-title"></h2>
+
+        <!-- Main feed -->
+        <div id="main-feed" class="row">
+        </div>
+
+        <div id="modals-holder">
+        </div>
+    </div>
+
+    <footer>
+    </footer>
+
+    <!-- JS includes -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="js/jquery.xdomainajax.js"></script>
+    <script src="https://www.google.com/jsapi"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script>
+    <script src="js/tiny_segmenter-0.2.js"></script>
+    <script src="js/algorithms.js"></script>
+    <script src="js/main.js"></script>
+
+    <script>
+     var FEED_URL = "http://news.livedoor.com/topics/rss/spo.xml";
+     showFeedFromUrl(FEED_URL);
+    </script>
+</body>
+</html>
