@@ -91,7 +91,7 @@ function feedAdder(entry) {
     // append modal to the modals-holder
     $('<div/>', {
         id: 'modal-' + entry.index,
-        'class': 'modal',
+        'class': 'modal fade',
         role: 'dialog',
         html: modal
     }).appendTo('#modals-holder');

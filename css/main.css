@@ -21,6 +21,7 @@
     padding-left: 0px;
     padding-right: 0px;
     overflow: hidden;
+    cursor: pointer;
 }
 
 img.main-article-img {
