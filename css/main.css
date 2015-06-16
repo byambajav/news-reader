@@ -1,33 +1,71 @@
+/* Feed */
+.feed-title {
+    font-weight: bold;
+    margin-top: 45px;
+    margin-bottom: 30px;
+}
+
 .feed-img-div {
     max-height: 150px;
     min-height: 150px;
     overflow: hidden;
 }
 
-.feed-related-img-div {
-    max-height: 90px;
-    min-height: 90px;
-    overflow: hidden;
-}
 
+/* Main article */
 .main-article-container {
+    max-height: 150px;
+    min-height: 150px;
     margin-top: 8px;
     margin-bottom: 8px;
+    padding-left: 0px;
+    padding-right: 0px;
 }
 
 img.main-article-img {
     overflow: hidden;
 }
 
-.related-article-container {
+
+/* Related article */
+div.related-article-container {
     padding-top: 8px;
-    margin-bottom: 8px;
-    border-top: thin solid gray;
-    max-height: 140px;
-    min-height: 140px;
+    padding-left: 0px;
+    padding-right: 0px;
+    margin-bottom: 30px;
+    border-top: thin solid #C0C0C0;
+    max-height: 130px;
+    min-height: 130px;
+    overflow: hidden;
+}
+
+div.related-article-middle {
+    border-right: thin solid #C0C0C0;
+    border-left: thin solid #C0C0C0;
+}
+
+.related-article-img-div {
+    max-height: 80px;
+    min-height: 80px;
     overflow: hidden;
 }
 
 a.related-article-url {
     font-size: small;
+}
+
+
+/* Modal reader */
+.modal-title{
+    font-weight: bold;
+}
+
+a.modal-source {
+    font-weight: bold;
+    float: left;
+}
+
+.modal-reader {
+    width: 80%; /* respsonsive width */
+    margin-left: 10%;
 }

@@ -22,7 +22,7 @@
 </head>
 <body style="padding-top: 20px; padding-bottom: 20px">
     <div class='container'>
-        <nav class="navbar navbar-default">
+        <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container-fluid">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -31,15 +31,15 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="index.html">RSS Reader</a>
+                    <a class="navbar-brand" href="index.html">Home</a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="#">Home</a></li>
-                        <li><a href='https://github.com/byambajav'>About</a></li>
+                        <li class="active"><a href="">Top</a></li>
+                        <li><a href='sports.html'>Sports</a></li>
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#">Settings</a></li>
+                        <li><a href='https://github.com/byambajav'>About</a></li>
                     </ul>
                 </div>
             </div>
@@ -47,21 +47,16 @@
     </div>
 
     <div class="container">
-        <div>
-            <ul class="nav nav-tabs">
-                <li class="active">
-                    <a href="#">Top</a>
-                </li>
-            </ul>
-        </div>
+        <h2 id="title" class="feed-title"></h2>
 
         <!-- Main feed -->
-        <h1 id="title"></h1>
         <div id="main-feed" class="row">
         </div>
-        <div id="content" class="row">
+
+        <div id="modals-holder">
         </div>
     </div>
+
     <footer>
     </footer>
 

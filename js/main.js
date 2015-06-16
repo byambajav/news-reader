@@ -12,14 +12,19 @@ function checkAddToCurrrentArticles(link) {
     return true;
 }
 
-function buildRelatedArticle(article) {
-    var html = "<div class='col-xs-4'>";
+function buildRelatedArticle(article, pos) {
+    var html;
+    if (pos == 1) {
+        html = "<div class='col-xs-4 related-article-middle'>";
+    } else {
+        html = "<div class='col-xs-4'>";
+    }
     var content = "";
     var imageUrl = (('image' in article) ? article.image.url : DEFAULT_RELATED_IMG_URL);
 
     content = "\
 <div class='row'>\
-    <div class='col-xs-12 feed-related-img-div'>\
+    <div class='col-xs-12 related-article-img-div'>\
         <img src='" + imageUrl + "' alt='' class='img-responsive center-block'/>\
     </div>\
 <div class='col-xs-12'>\
@@ -33,9 +38,9 @@ function buildRelatedArticle(article) {
 
 // add a news item into the feed
 function feedAdder(entry) {
-    // build
+    // main article
     var mainArticle = "\
-    <div class='col-xs-12 main-article-container'>\
+    <div class='col-xs-12 main-article-container' data-toggle='modal' data-target='#modal-" + entry.index + "'>\
     <div class='col-xs-4 feed-img-div'>";
     var imageUrl = ((entry.imgUrl !== undefined) ? entry.imgUrl : DEFAULT_IMG_URL);
     mainArticle += "<img src='" + imageUrl + "' alt='' class='img-responsive main-article-img center-block'/>";
@@ -46,12 +51,14 @@ function feedAdder(entry) {
         <p class='text-muted'>" + entry.contentSnippet + "</p>\
     </div>\
     </div>";
+
+    // related articles
     var relatedArticles = "\
     <div class='col-xs-12 related-article-container'>";
     var addedCount = 0;
     for (var i = 0; i < entry.relatedArticles.length; i++) {
         if (checkAddToCurrrentArticles(entry.relatedArticles[i].unescapedUrl)) {
-            relatedArticles += buildRelatedArticle(entry.relatedArticles[i]);
+            relatedArticles += buildRelatedArticle(entry.relatedArticles[i], addedCount);
             addedCount++;
             if (addedCount >= 3) break;
         }
@@ -59,17 +66,42 @@ function feedAdder(entry) {
     relatedArticles += "\
 </div>";
 
-    // append
+    // append main article and related articles to the main feed
     $('<div/>', {
         id: 'foo',
         href: 'http://google.com',
-        'class': 'col-xs-12 col-md-6 panel panel-default',
+        'class': 'col-xs-12 col-md-6',
         html: mainArticle + relatedArticles
     }).appendTo('#main-feed');
+
+    // modal
+    var modal = "\
+    <div class='modal-dialog modal-reader'>\
+        <div class='modal-content'>\
+            <div class='modal-header'>\
+                <button type='button' class='close' data-dismiss='modal'>&times;</button>\
+                <h4 class='modal-title'>" + entry.title + "</h4>\
+            </div>\
+            <div class='modal-body'>"
+                 + entry.articleBodyHtml +
+            "</div>\
+            <div class='modal-footer'>\
+                <a href='" + entry.link + "' class='modal-source'>source<a/>\
+                <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>\
+            </div>\
+        </div>\
+</div>";
+
+    // append modal to the modals-holder
+    $('<div/>', {
+        id: 'modal-' + entry.index,
+        'class': 'modal fade',
+        role: 'dialog',
+        html: modal
+    }).appendTo('#modals-holder');
 }
 
 function newsSearchComplete(newsSearch, entry) {
-    // console.log(newsSearch.results);
     entry.relatedArticles = newsSearch.results;
     feedAdder(entry);
 }
@@ -101,6 +133,7 @@ function getDetails(entry) {
         success: function(res) {
             // add the details to the entry object
             entry.articleBody = $(res.responseText).find('div.articleBody:first').text();
+            entry.articleBodyHtml = $(res.responseText).find('div.articleBody:first').html();
             entry.imgUrl = $(res.responseText).find('figure.articleImage:first').find('img:first').prop('src');
             if (entry.articleBody.length > 0) {
                 getRelated(entry);
@@ -113,6 +146,7 @@ function showFeed(feed) {
     $('#title').html(feed.description);
     for (var i in feed.entries) {
         console.log(feed.entries[i]);
+        feed.entries[i].index = i;
         if (checkAddToCurrrentArticles(feed.entries[i].link)) {
             getDetails(feed.entries[i]);
         }
