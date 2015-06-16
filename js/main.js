@@ -1,7 +1,8 @@
 // generate a "Raw Searcher" to handle search queries
 google.load('search', '1');
 
-var DEFAULT_IMG_URL = 'https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xap1/v/t1.0-1/p160x160/1390772_1411031915796231_174206743_n.jpg?oh=7a7fe381fd07ee3f2cf8d5141ecf6fb8&oe=55F91819&__gda__=1442557115_4c4c1b4730acf8c17ed99a2f8e51796d';
+var DEFAULT_IMG_URL = 'http://news.livedoor.com/img/fb/news.png?v=20131122';
+var DEFAULT_RELATED_IMG_URL = 'img/google_news.jpg';
 
 var currentArticles = [];
 
@@ -14,12 +15,12 @@ function checkAddToCurrrentArticles(link) {
 function buildRelatedArticle(article) {
     var html = "<div class='col-xs-4'>";
     var content = "";
-    var imageUrl = (('image' in article) ? article.image.url : DEFAULT_IMG_URL);
+    var imageUrl = (('image' in article) ? article.image.url : DEFAULT_RELATED_IMG_URL);
 
     content = "\
 <div class='row'>\
     <div class='col-xs-12 feed-related-img-div'>\
-        <img src='" + imageUrl + "' alt='' class='img-responsive center-block' />\
+        <img src='" + imageUrl + "' alt='' class='img-responsive center-block'/>\
     </div>\
 <div class='col-xs-12'>\
     <a class='text-info related-article-url' href='" + article.unescapedUrl + "'>" + article.titleNoFormatting + "</a>\
@@ -36,11 +37,8 @@ function feedAdder(entry) {
     var mainArticle = "\
     <div class='col-xs-12 main-article-container'>\
     <div class='col-xs-4 feed-img-div'>";
-    if (entry.imgUrl !== undefined) {
-        mainArticle += "<img src='" + entry.imgUrl + "' alt='' class='img-responsive main-article-img'/>";
-    } else {
-        mainArticle += "<img src='" + DEFAULT_IMG_URL + "' alt='' class='img-responsive' />";
-    }
+    var imageUrl = ((entry.imgUrl !== undefined) ? entry.imgUrl : DEFAULT_IMG_URL);
+    mainArticle += "<img src='" + imageUrl + "' alt='' class='img-responsive main-article-img center-block'/>";
     mainArticle += "\
     </div>\
     <div class='col-xs-8'>\
@@ -82,10 +80,12 @@ function getRelated(entry) {
 
     // Set newsSearchComplete as the callback function when a search is
     // complete.  The newsSearch object will have results in it.
+    newsSearch.setResultSetSize(8);
     newsSearch.setSearchCompleteCallback(this, newsSearchComplete, [newsSearch, entry]);
 
     // Specify search quer(ies)
     var hitWords = getHitWords(entry.articleBody);
+    // var hitWords = getHitWords(entry.title);
 
     // newsSearch.execute(entry.title);
     var query = hitWords.join(' ');

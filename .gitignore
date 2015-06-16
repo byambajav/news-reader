@@ -1,0 +1,5 @@
+# Emacs tmp files
+*~
+
+# OS X tmp files
+*.DS_Store

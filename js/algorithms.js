@@ -5,7 +5,7 @@ function getHitWords(doc) {
     var words = segmenter.segment(doc.replace(/ /g,'').replace(/↵/g,'').replace(/\n/g,'').replace(/■/g, ''));
     var basics = ['から', 'ない', 'した', 'する', 'して', 'よう', 'こと', 'たち', 'いる', 'いた', 'など',
                   'という', 'より', 'ます', 'たい', 'ため', 'まで', 'です', 'よる', 'として', 'さん',
-                  'でも', 'すぐ', 'ある', 'その'];
+                  'でも', 'すぐ', 'ある', 'その', 'さま'];
 
     // build a dict object
     var dict = {};
