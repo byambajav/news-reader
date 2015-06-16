@@ -56,6 +56,15 @@ a.related-article-url {
 
 
 /* Modal reader */
+.modal-reader {
+    width: 80%; /* responsive width */
+    margin-left: 10%;
+}
+
+.modal-content {
+    overflow: hidden;
+}
+
 .modal-title{
     font-weight: bold;
 }
@@ -63,9 +72,4 @@ a.related-article-url {
 a.modal-source {
     font-weight: bold;
     float: left;
-}
-
-.modal-reader {
-    width: 80%; /* respsonsive width */
-    margin-left: 10%;
 }
