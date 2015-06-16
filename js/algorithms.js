@@ -1,8 +1,11 @@
+var HIT_WORDS_LEN = 5;
+
 function getHitWords(doc) {
     var segmenter = new TinySegmenter();
-    var words = segmenter.segment(doc.replace(/ /g,'').replace(/↵/g,'').replace(/\n/g,''));
-    console.log(words);
-    var basics = ['から', 'ない', 'した', 'する', 'して', 'よう', 'こと', 'たち', 'いる', 'いた', 'など', 'という', 'より', 'ます', 'たい', 'ため', 'まで', 'です'];
+    var words = segmenter.segment(doc.replace(/ /g,'').replace(/↵/g,'').replace(/\n/g,'').replace(/■/g, ''));
+    var basics = ['から', 'ない', 'した', 'する', 'して', 'よう', 'こと', 'たち', 'いる', 'いた', 'など',
+                  'という', 'より', 'ます', 'たい', 'ため', 'まで', 'です', 'よる', 'として', 'さん',
+                  'でも', 'すぐ', 'ある', 'その'];
 
     // build a dict object
     var dict = {};
@@ -16,16 +19,14 @@ function getHitWords(doc) {
         }
     }
 
-    // convert it into an array
+    // convert it into an array then sort
     var tuples = [];
     for (var key in dict) tuples.push([key, dict[key]]);
     tuples.sort(function (a, b) { return b[1] - a[1]; });
 
     var out = [];
-    for (var j = 0; j < Math.min(tuples.length, 5); j++) {
+    for (var j = 0; j < Math.min(tuples.length, HIT_WORDS_LEN); j++) {
         out.push(tuples[j][0]);
     }
     return out;
-    // console.log(tuples);
-    // return tuples.slice(0, 8);
 };
