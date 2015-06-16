@@ -1,7 +1,28 @@
+/* Navbar overrides */
+/* .navbar-default { */
+/*     background-color: red; */
+/*     padding-bottom: 10px; */
+/* } */
+
+/* .sports-tab { */
+/*     background-color: green; */
+/* } */
+
+/* .navbar-default .navbar-brand { */
+/*     color: white; */
+/* } */
+/* .navbar-default .navbar-nav > li > a { */
+/*     color: white; */
+/* } */
+/* .navbar-default .navbar-nav > li > a:hover, */
+/* .navbar-default .navbar-nav > li > a:focus { */
+/*     color: white; */
+/* } */
+
 /* Feed */
 .feed-title {
     font-weight: bold;
-    margin-top: 45px;
+    margin-top: 50px;
     margin-bottom: 30px;
 }
 
