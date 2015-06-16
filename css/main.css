@@ -5,27 +5,33 @@
     margin-bottom: 30px;
 }
 
-.feed-img-div {
+.main-article-img-div {
     max-height: 150px;
-    min-height: 150px;
+    min-height: 120px;
+    padding-left: 0px;
+    padding-right: 10px;
     overflow: hidden;
 }
 
 
 /* Main article */
 .main-article-container {
-    max-height: 150px;
-    min-height: 150px;
+    min-height: 120px;
     margin-top: 8px;
     margin-bottom: 8px;
-    padding-left: 0px;
-    padding-right: 0px;
-    overflow: hidden;
+    padding-left: 8px;
+    padding-right: 8px;
+    /* overflow: hidden; */
     cursor: pointer;
 }
 
-img.main-article-img {
-    overflow: hidden;
+div.main-article {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+p.main-article {
+    margin-bottom: 0px;
 }
 
 
@@ -34,20 +40,21 @@ div.related-article-container {
     padding-top: 8px;
     padding-left: 0px;
     padding-right: 0px;
-    padding-bottom: 20px;
     margin-bottom: 30px;
-    border-top: thin solid #C0C0C0;
+    border-top: thin dotted #C0C0C0;
     max-height: 130px;
     min-height: 130px;
     overflow: hidden;
 }
 
 div.related-article-middle {
-    border-right: thin solid #C0C0C0;
-    border-left: thin solid #C0C0C0;
+    border-right: thin dotted #C0C0C0;
+    border-left: thin dotted #C0C0C0;
 }
 
 .related-article-img-div {
+    padding-left: 8px;
+    padding-right: 8px;
     max-height: 80px;
     min-height: 80px;
     overflow: hidden;
@@ -57,11 +64,16 @@ a.related-article-url {
     font-size: small;
 }
 
+div.related-article-title-div {
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
 
 /* Modal reader */
 .modal-reader {
-    width: 80%; /* responsive width */
-    margin-left: 10%;
+    width: 90%; /* responsive width */
+    margin-left: 5%;
 }
 
 .modal-content {
@@ -73,6 +85,5 @@ a.related-article-url {
 }
 
 a.modal-source {
-    font-weight: bold;
     float: left;
 }

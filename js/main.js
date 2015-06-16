@@ -1,7 +1,7 @@
 // generate a "Raw Searcher" to handle search queries
 google.load('search', '1');
 
-var DEFAULT_IMG_URL = 'http://news.livedoor.com/img/fb/news.png?v=20131122';
+var DEFAULT_IMG_URL = 'img/livedoor_news.jpg';
 var DEFAULT_RELATED_IMG_URL = 'img/google_news.jpg';
 
 var currentArticles = [];
@@ -27,7 +27,7 @@ function buildRelatedArticle(article, pos) {
     <div class='col-xs-12 related-article-img-div'>\
         <img src='" + imageUrl + "' alt='' class='img-responsive center-block'/>\
     </div>\
-<div class='col-xs-12'>\
+<div class='col-xs-12 related-article-title-div'>\
     <a class='text-info related-article-url' href='" + article.unescapedUrl + "'>" + article.titleNoFormatting + "</a>\
 </div>\
 </div>";
@@ -41,15 +41,15 @@ function feedAdder(entry) {
     // main article
     var mainArticle = "\
     <div class='col-xs-12 main-article-container' data-toggle='modal' data-target='#modal-" + entry.index + "'>\
-    <div class='col-xs-4 feed-img-div'>";
+    <div class='col-xs-4 main-article-img-div'>";
     var imageUrl = ((entry.imgUrl !== undefined) ? entry.imgUrl : DEFAULT_IMG_URL);
     mainArticle += "<img src='" + imageUrl + "' alt='' class='img-responsive main-article-img center-block'/>";
     mainArticle += "\
     </div>\
-    <div class='col-xs-8'>\
+    <div class='col-xs-8 main-article'>\
         <strong>" + entry.title + "</strong>\
-        <p class='text-muted'>" + entry.contentSnippet +
-       "<small class='text-muted text-right'> /" + moment(Date.parse(entry.publishedDate)).fromNow() + "</small></p>\
+        <p class='text-muted main-article'>" + entry.contentSnippet +
+       "<small class='text-muted text-right'> /<u>" + moment(Date.parse(entry.publishedDate)).fromNow() + "</u></small></p>\
     </div>\
     </div>";
 
@@ -82,7 +82,7 @@ function feedAdder(entry) {
                  + entry.articleBodyHtml +
             "</div>\
             <div class='modal-footer'>\
-                <a href='" + entry.link + "' class='modal-source'>source<a/>\
+                <a href='" + entry.link + "' class='modal-source'><u>source</u><a/>\
                 <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>\
             </div>\
         </div>\
@@ -145,6 +145,11 @@ function showFeed(feed) {
                 id: 'article-' + i,
                 'class': 'col-xs-12 col-md-6'
             }).appendTo('#main-feed');
+            if (i % 2 == 1) {
+                $('<div/>', {
+                    'class': 'clearfix visible-md visible-lg'
+                }).appendTo('#main-feed');
+            }
 
             getDetails(feed.entries[i]);
         }
