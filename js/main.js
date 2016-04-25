@@ -69,6 +69,7 @@ function feedAdder(entry) {
 
     // insert main article and related articles to the holder
     $('#article-' + entry.index).html(mainArticle + relatedArticles);
+    $('#article-' + entry.index).removeClass('hide');
 
     // modal
     var modal = "\
@@ -143,7 +144,7 @@ function showFeed(feed) {
             // append main article and related articles holder to the main feed
             $('<div/>', {
                 id: 'article-' + i,
-                'class': 'col-xs-12 col-md-6'
+                'class': 'col-xs-12 col-md-6 hide'
             }).appendTo('#main-feed');
             if (i % 2 == 1) {
                 $('<div/>', {
